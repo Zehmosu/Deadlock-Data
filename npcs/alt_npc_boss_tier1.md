@@ -1,0 +1,209 @@
+# NPC: alt_npc_boss_tier1
+
+## General Stats
+
+- **m_nMaxHealth**: 5500
+- **m_flSightRangePlayers**: 1500.0
+- **m_flSightRangeNPCs**: 1500.0
+- **m_flTrooperDamageResistPct**: 25.0
+- **m_flT1BossDamageResistPct**: 35.0
+- **m_flT2BossDamageResistPct**: 20.0
+- **m_flShieldDamageResistPct**: 80.0
+- **m_flNearDeathDuration**: 1.0
+- **m_flWalkSpeed**: 240
+- **m_flRunSpeed**: 300
+- **m_flAcceleration**: 200
+- **m_flMeleeDamage**: 100.0
+- **m_flMeleeAttemptRange**: 240
+- **m_flMeleeHitRange**: 314.96
+- **m_flMeleeDuration**: 1.0
+- **m_flAttackT1BossMaxRange**: 540
+- **m_flAttackTrooperMaxRange**: 700
+- **m_flMeleeChargeRange**: 0.0
+- **m_flHealthBarOffset**: 260.0
+- **m_flHealthBarOffsetDucking**: 200.0
+- **m_bPlayLastHitSound**: True
+- **m_flBarrackGuardianDamageResistPct**: 67.5
+- **m_flT1BossDPS**: 36.0
+- **m_flT2BossDPS**: 80.0
+- **m_flT3BossDPS**: 80.0
+- **m_flGeneratorBossDPS**: 22
+- **m_flBarrackBossDPS**: 80.0
+- **m_flPlayerDPS**: 28.0
+- **m_flTrooperDPS**: 35.0
+- **m_flModelScale**: 1.0
+- **m_navHull**: 1
+- **m_flPhysicsImpulseMultiplier**: 0.0
+- **m_flTurnRate**: 360
+- **m_bMitigateDamageFromPlayers**: True
+- **m_flBeamWeaponWidth**: 6.0
+- **m_flBeamTurnRate**: 360
+- **m_flMinMeleeAttackTime**: 1.5
+
+## Weapon Info
+
+- **m_Spread**: 0.5
+- **m_StandingSpread**: 1.5
+- **m_flScatterYawScale**: 1
+- **m_flShootingUpSpreadPenalty**: 0
+- **m_flZoomMoveSpeedPercent**: 0.7
+- **m_flShootMoveSpeedPercent**: 0.7
+- **m_flHorizontalPunch**: 0
+- **m_flVerticalPunch**: 0
+- **m_flRecoilRecoverySpeed**: 10.0
+- **m_VerticallRecoil**:
+  - **m_Range**:
+    - -0.2
+    - 0.2
+  - **m_flBurstSlope**: 0.0
+  - **m_flBurstExponent**: 0.0
+  - **m_flBurstConstant**: 0.0
+- **m_HorizontalRecoil**:
+  - **m_Range**:
+    - -0.1
+    - 0.1
+  - **m_flBurstExponent**: 0.0
+- **m_flRecoilSpeed**: 1
+- **m_flZoomFOV**: 40.0
+- **m_flDamageFalloffStartRange**: 2000
+- **m_flDamageFalloffEndRange**: 2000
+- **m_flRange**: 2000
+- **m_flBulletLifetime**: 2
+- **m_flDamageFalloffEndScale**: 0.3
+- **m_flDamageFalloffBias**: 0.5
+- **m_iBullets**: 1
+- **m_flCycleTime**: 0.2
+- **m_reloadDuration**: 1
+- **m_iClipSize**: -1
+- **m_iBurstShotCount**: 1
+- **m_flBurstShotCooldown**: 0
+- **m_flBulletGravityScale**: 0
+- **m_flBulletRadius**: 12
+- **m_flBulletDrag**: 1
+- **m_flBulletDragBias**: 0.5
+- **m_flBulletReflectScale**: 0
+- **m_flBulletReflectAmount**: 1
+- **m_flBulletInheritShooterVelocityScale**: 0
+- **m_szBulletTravelTracerParticle**: resource_name:"particles/weapon_fx/trooper/trooper_bullet_travel.vpcf"
+- **m_szMuzzleFlashEffectName**: resource_name:"particles/weapon_fx/tier1boss/tier1boss_muzzle_flash.vpcf"
+- **m_strShootSound**: soundevent:"TrooperRifle.Fire"
+- **m_strBulletWhizSound**: soundevent:"Base.Bullet.Whizby"
+- **m_BulletSpeedCurve**:
+  - **m_spline**:
+    | x | y | m_flSlopeIncoming | m_flSlopeOutgoing |
+    | --- | --- | --- | --- |
+    | 0.0 | 12000.0 | 0.0 | 0.0 |
+    | 100.0 | 12000.0 | 0.0 | 0.0 |
+  - **m_tangents**:
+    | m_nIncomingTangent | m_nOutgoingTangent |
+    | --- | --- |
+    | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+    | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+  - **m_vDomainMins**:
+    - 0.0
+    - 1.0
+  - **m_vDomainMaxs**:
+    - 100.0
+    - 12000.0
+- **m_mapImpactEffects**:
+  - **default**:
+    - **m_strDecal**: Impact.Concrete
+    - **m_strParticle**: resource_name:"particles/impact_fx/impact_spark_spray_large.vpcf"
+    - **m_strSound**: soundevent:"Guardian.Tier1.Wpn.Impact"
+  - **flesh**:
+    - **m_strDecal**: 
+    - **m_strParticle**: resource_name:"particles/blood_impact/blood_impact_red_01.vpcf"
+    - **m_strSound**: soundevent:"Flesh.BulletImpact"
+  - **concrete**:
+    - **m_strDecal**: Impact.Concrete
+    - **m_strParticle**: resource_name:"particles/impact_fx/impact_spark_spray_large.vpcf"
+    - **m_strSound**: soundevent:"Concrete.BulletImpact"
+  - **solidmetal**:
+    - **m_strDecal**: Impact.Concrete
+    - **m_strParticle**: resource_name:"particles/impact_fx/impact_spark_spray_large.vpcf"
+    - **m_strSound**: soundevent:"SolidMetal.BulletImpact"
+  - **portals**:
+    - **m_strDecal**: Impact.Concrete
+    - **m_strParticle**: resource_name:"particles/impact_fx/impact_spark_spray_large.vpcf"
+    - **m_strSound**: soundevent:"Player.HitInvuln"
+- **m_flCritBonusStart**: 1.15
+- **m_flCritBonusEnd**: 1.35
+- **m_flCritBonusStartRange**: 500.0
+- **m_flCritBonusEndRange**: 1500.0
+- **m_flCritBonusAgainstNPCs**: 0.25
+- **m_flShootSpreadPenaltyPerShot**: 0.0
+- **m_flShootSpreadPenaltyDecayDelay**: 0.0
+- **m_flShootSpreadPenaltyDecay**: 2.0
+- **m_flRecoilShotIndexRecoveryTimeFactor**: 0.25
+- **m_bCanZoom**: True
+- **m_strWeaponImpactEffect**: resource_name:"particles/weapon_fx/tier1boss/tier1boss_tracer_impact.vpcf"
+- **m_flReloadMoveSpeed**: 236.22
+- **m_strLocalPlayerBulletImpactSound**: soundevent:"Player.Bullet.Impact.Trooper"
+- **m_NpcAimingSpread**: 0.2
+- **m_flBulletDamage**: 16
+- **m_flAutoReplenishClip**: 2
+- **m_flBulletRadiusVsWorld**: 1
+
+## Other Information
+
+- **_base**: npc_boss_tier1
+- **_class**: npc_trooper_boss
+- **m_sModelName**: resource_name:"models/npc/boss_tier_01_brazier_guardian/boss_tier_01_brazier_guardian.vmdl"
+- **m_hFootstepSounds**: trooper
+- **m_BossAttackParticle**: resource_name:"particles/weapon_fx/trooper/trooper_bullet_bonus_dmg.vpcf"
+- **m_sDefaultMaterialGroupName**: FriendlyBoss
+- **m_sEnemyMaterialGroupName**: EnemyBoss
+- **m_DeathParticle**: resource_name:"particles/trooper/trooper_death_sn.vpcf"
+- **m_DeathSound**: soundevent:"Trooper.Death"
+- **m_MeleeHitSound**: soundevent:"Trooper.Melee.Damage.Hit"
+- **m_MeleeHitPlayerSound**: soundevent:"Player.Damage.Melee.Trooper.Impact"
+- **m_HealthBarParticle**: resource_name:""
+- **m_sHealthBarAttachment**: head_fx
+- **m_HealthBarColorFriend**:
+  - 255
+  - 239
+  - 215
+- **m_HealthBarColorEnemy**:
+  - 230
+  - 25
+  - 25
+- **m_HealthBarColorTeam1**:
+  - 231
+  - 182
+  - 89
+- **m_HealthBarColorTeam2**:
+  - 91
+  - 121
+  - 230
+- **m_HealthBarColorTeamNeutral**:
+  - 0
+  - 125
+  - 125
+- **m_MeleeSwingParticle**: resource_name:"particles/abilities/melee_swing.vpcf"
+- **m_MeleeActivateParticle**: resource_name:"particles/abilities/melee/melee_activate.vpcf"
+- **m_MeleeAnimName**: b_melee
+- **m_LastHitParticle**: resource_name:"particles/generic/last_hit.vpcf"
+- **m_strLastHitSound**: soundevent:"LastHit.Default"
+- **m_NearDeathModifier**:
+  - **subclass**:
+    - **_class**: modifier_near_death_fx
+    - **_my_subclass_name**: modifier_near_death_fx
+    - **m_EnemyNearDeathParticle**: resource_name:"particles/status_fx/status_fx_last_hit.vpcf"
+    - **m_FriendlyNearDeathParticle**: resource_name:"particles/status_fx/status_fx_last_hit_friend.vpcf"
+    - **m_sSelfDestructStart**: soundevent:"Trooper.SelfDestruct_Start"
+    - **m_sSelfDestructEnd**: soundevent:"Trooper.SelfDestruct_Exp"
+- **m_TargetingLaserParticle**: resource_name:"particles/weapon_fx/trooper_laser_target.vpcf"
+- **m_TargetingEyeFlashParticle**: resource_name:"particles/enemy_targeting_indicator.vpcf"
+- **m_sCelebrationSound**: soundevent:"Trooper.Objective.Win.Cheer"
+- **m_sTeam1MaterialGroupName**: Amber
+- **m_sTeam2MaterialGroupName**: Sapphire
+- **m_BeamWeaponParticle**: resource_name:"particles/weapon_fx/npc/t1_guardian_beam.vpcf"
+- **m_BeamStartSound**: soundevent:"Guardian.Tier1.Wpn.Beam.Begin"
+- **m_BeamStopSound**: soundevent:"Guardian.Tier1.Wpn.Beam.End"
+- **m_BeamPointStartLoopSound**: soundevent:"Guardian.Tier1.Wpn.Point.Begin.Lp"
+- **m_BeamPointEndLoopSound**: soundevent:"Guardian.Tier1.Wpn.Point.End.Lp"
+- **m_BeamPointClosestLoopSound**: soundevent:"Guardian.Tier1.Wpn.Point.Closest.Lp"
+- **m_TrooperBossInvulnModifier**:
+  - **subclass**:
+    - **_my_subclass_name**: trooper_boss_invuln
+    - **_class**: modifier_boss_invuln
