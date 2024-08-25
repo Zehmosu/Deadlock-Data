@@ -2089,6 +2089,20 @@
     - **m_OnCreateResponse**:
       - **m_nConcept**: TLK_CITADEL_INTERACT_WITH_ABILITY
       - **m_nSpeakerType**: MODIFIER_RR_SPEAKER_CASTER
+- **m_flBossVictimNoMeleeTime**: 7.0
+- **m_flBossVictimCalmTime**: 2.25
+- **m_ParryBossVictimNoMeleeModifier**:
+  - **subclass**:
+    - **_my_subclass_name**: boss_victim_no_melee
+    - **_class**: modifier_base
+    - **m_bIsHidden**: True
+    - **m_nEnabledStateMask**: MODIFIER_STATE_MELEE_DISABLED
+- **m_ParryBossVictimCalmModifier**:
+  - **subclass**:
+    - **_my_subclass_name**: boss_victim_calm
+    - **_class**: modifier_base
+    - **m_bIsHidden**: True
+    - **m_nEnabledStateMask**: MODIFIER_STATE_AI_FORCE_CALM
 - **m_flActiveTime**: 0.7
 - **m_flWhiffDuration**: 1.0
 - **m_flMovementRestrictionTime**: 0
