@@ -25,7 +25,7 @@
 - **m_flBurstCooldown**: 0.2
 - **m_flPhysicsImpulseMultiplier**: 0.0
 - **m_flModelScale**: 1.0
-- **m_flInvulModifierRange**: 1200
+- **m_flInvulModifierRange**: 1278.74
 
 ## Weapon Info
 

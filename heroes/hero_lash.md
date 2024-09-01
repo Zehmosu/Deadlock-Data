@@ -942,6 +942,27 @@
 - **m_flLateJumpGraceWindow**: 0.15
 - **m_flDashJumpVerticalSpeed**: 400.0
 - **m_flDashJumpDistanceInMeters**: 18.0
+- **m_flWallJumpSpeed**: 600.0
+- **m_WallJumpParticle**: resource_name:"particles/generic/wall_jump.vpcf"
+- **m_WallJumpExecutedSound**: soundevent:"Player.WallJump"
+- **m_WallJumpAirDragCurve**:
+  - **m_spline**:
+    | x | y | m_flSlopeIncoming | m_flSlopeOutgoing |
+    | --- | --- | --- | --- |
+    | 0.0 | 2.203636 | -4.451692 | -4.451692 |
+    | 0.495011 | 0.0 | -4.451692 | -4.451692 |
+  - **m_tangents**:
+    | m_nIncomingTangent | m_nOutgoingTangent |
+    | --- | --- |
+    | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+    | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+  - **m_vDomainMins**:
+    - 0.0
+    - 0.0
+  - **m_vDomainMaxs**:
+    - 1.0
+    - 5.0
+- **m_flWallJumpNormalSpeed**: 400.0
 
 ### ESlot_Ability_Slide
 
@@ -1610,6 +1631,159 @@
   - **m_vecHUDElements**:
 - **m_flTimeForHint**: 1.0
 
+### ESlot_Ability_ClimbRope
+
+- **_class**: citadel_ability_climb_rope
+- **m_mapAbilityProperties**:
+  - **AbilityCooldown**:
+    - **m_strValue**: 0.1
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cooldown
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCooldown_scale_function
+        - **m_eSpecificStatScaleType**: ETechCooldown
+  - **AbilityDuration**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: duration
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityDuration_scale_function
+        - **m_eSpecificStatScaleType**: ETechDuration
+  - **AbilityCastRange**:
+    - **m_strValue**: 0
+    - **m_eDisplayUnits**: EDisplayUnit_Meters
+    - **m_strCSSClass**: range
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCastRange_scale_function
+        - **m_eSpecificStatScaleType**: ETechRange
+  - **AbilityUnitTargetLimit**:
+    - **m_strValue**: 1
+    - **m_bCanSetTokenOverride**: True
+  - **AbilityCastDelay**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cast
+    - **m_bCanSetTokenOverride**: True
+  - **AbilityChannelTime**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cast
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_multi_stats
+        - **_my_subclass_name**: scale_duration
+        - **m_vecScalingStats**:
+          - EChannelDuration
+          - ETechDuration
+  - **AbilityPostCastDuration**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+  - **AbilityCharges**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cast
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCharges_scale_function
+        - **m_eSpecificStatScaleType**: EMaxChargesIncrease
+  - **AbilityCooldownBetweenCharge**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: charge_cooldown
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCooldownBetweenCharge_scale_function
+        - **m_eSpecificStatScaleType**: ETechCooldownBetweenChargeUses
+  - **ChannelMoveSpeed**:
+    - **m_strValue**: 50
+    - **m_eDisplayUnits**: EDisplayUnit_MetersPerSecond
+    - **m_strCSSClass**: move_speed
+    - **m_bCanSetTokenOverride**: True
+  - **AbilityResourceCost**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_bCanSetTokenOverride**: True
+    - **m_strCSSClass**: cast
+  - **TechPower**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_bCanSetTokenOverride**: True
+    - **m_eProvidedPropertyType**: MODIFIER_VALUE_TECH_POWER
+  - **WeaponPower**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_bCanSetTokenOverride**: True
+    - **m_eProvidedPropertyType**: MODIFIER_VALUE_WEAPON_POWER
+- **m_bitsPostCastEnabledStateMask**: MODIFIER_STATE_BUSY_WITH_ACTION
+- **_editor**:
+  - **folder_name**: Base
+- **m_WeaponInfo**:
+  - **m_BulletSpeedCurve**:
+    - **m_spline**:
+      | x | y | m_flSlopeIncoming | m_flSlopeOutgoing |
+      | --- | --- | --- | --- |
+      | 0.0 | 10000.0 | 0.0 | 0.0 |
+      | 100.0 | 10000.0 | 0.0 | 0.0 |
+    - **m_tangents**:
+      | m_nIncomingTangent | m_nOutgoingTangent |
+      | --- | --- |
+      | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+      | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+    - **m_vDomainMins**:
+      - 0.0
+      - 0.0
+    - **m_vDomainMaxs**:
+      - 100.0
+      - 10000.0
+- **_multibase**:
+  - inherent_base
+- **m_eAbilityType**: EAbilityType_Innate
+- **m_bStartTrained**: True
+- **m_iMaxLevel**: 1
+- **m_eAbilityTargetingLocation**: CITADEL_ABILITY_TARGETING_LOCATION_SELF
+- **m_eAbilityActivation**: CITADEL_ABILITY_ACTIVATION_ON_BUTTON_IS_DOWN
+- **m_nAbilityBehaviors**: CITADEL_ABILITY_BEHAVIOR_HIDDEN | CITADEL_ABILITY_BEHAVIOR_DONT_BREAK_INVISIBILITY | CITADEL_ABILITY_BEHAVIOR_SILENT_CAST_FAILURE_FEEDBACK | CITADEL_ABILITY_BEHAVIOR_DONT_INTERRUPT_SPRINT | CITADEL_ABILITY_BEHAVIOR_NOT_SILENCABLE | CITADEL_ABILITY_BEHAVIOR_NO_TARGET | CITADEL_ABILITY_BEHAVIOR_NON_COMBAT | CITADEL_ABILITY_BEHAVIOR_CASTABLE_WHILE_HIDDEN
+- **m_bitsInterruptingStates**: MODIFIER_STATE_IMMOBILIZED | MODIFIER_STATE_STUNNED | MODIFIER_STATE_IS_ASLEEP
+- **m_flActivateRange**: 90.0
+- **m_flMinButtonHoldTimeToActivate**: 0.15
+- **m_flClimbSpeedUp**: 11.0
+- **m_flClimbSpeedDown**: 12.0
+- **m_flClimbSpeedDownMax**: 30.0
+- **m_flClimbDownAccelTime**: 1.0
+- **m_flLatchSpeed**: 400
+- **m_flAttachOffset**: 70.0
+- **m_flMinReconnectTime**: 0.5
+- **m_flSideMoveReduction**: -100.0
+- **m_flTopOffset**: 40.0
+- **m_flBottomOffset**: 60.0
+- **m_flTraceRadiusSize**: 96.0
+- **m_flStopTimeToShoot**: 0.2
+- **m_flJumpOffVertical**: 250.0
+- **m_flJumpOffHorizontal**: 400.0
+- **m_flDuckOffVertical**: 100.0
+- **m_flDuckOffHorizontal**: 400.0
+- **m_flJumpToRoofRayCheckDist**: 160.0
+- **m_flMinTimeToRoofCheck**: 0.7
+- **m_HUDPanel**:
+  - **m_vecButtonHints**:
+    | m_strLocToken | m_eHintSide | m_strBindingOverride1 | m_strContext |
+    | --- | --- | --- | --- |
+    | #AbilityButtonHint_ClimbRope | EButtonSide_Bottom | in_mantle | climb_rope |
+
 ### ESlot_Ability_Innate_1
 
 - **_class**: citadel_ability_dash
@@ -1809,6 +1983,7 @@
     | k_ECameraOp_Lag | 0.0 | 0.1 | 5.0 | 50.0 |
 - **m_strStaminaDrainedSound**: soundevent:"Damage.Stamina.Drain"
 - **m_DownDashParticle**: resource_name:"particles/generic/down_dash.vpcf"
+- **m_bPlayMeepMop**: False
 
 ### ESlot_Ability_Innate_2
 
@@ -1946,7 +2121,7 @@
 - **_class**: citadel_ability_melee_parry
 - **m_mapAbilityProperties**:
   - **AbilityCooldown**:
-    - **m_strValue**: 6
+    - **m_strValue**: 5
     - **m_strDisableValue**: 0
     - **m_strCSSClass**: cooldown
     - **m_bCanSetTokenOverride**: True
@@ -2379,6 +2554,7 @@
 - **m_StompImpactParticle**: resource_name:"particles/abilities/lash/lash_ground_strike_v2_cone.vpcf"
 - **m_flGroupLengthTolerance**: 100.0
 - **m_StompLineObstructedParticle**: resource_name:"particles/abilities/lash/lash_ground_strike_v2_cone_line_collision.vpcf"
+- **m_StompEnemyImpactSound**: soundevent:"Lash.GroundStrike.Target.Impact"
 
 ### ESlot_Signature_2
 
@@ -2492,7 +2668,7 @@
   - **JumpSlowResistance**:
     - **m_strValue**: 0.667
   - **RestoreStaminaOnUse**:
-    - **m_strValue**: 1
+    - **m_strValue**: 0
   - **WeaponDamageBonus**:
     - **m_strValue**: 0
     - **m_strCSSClass**: bullet_damage
@@ -2574,8 +2750,8 @@
   | [{'m_strPropertyName': 'AbilityCastRange', 'm_strBonus': '20m'}, {'m_strPropertyName': 'WeaponDamageBonus', 'm_strBonus': '6'}, {'m_strPropertyName': 'WeaponDamageBonusDuration', 'm_strBonus': '10'}] |
   | [{'m_strPropertyName': 'WeaponFireRateBonus', 'm_strBonus': '20'}] |
 - **m_LashParticle**: resource_name:"particles/abilities/lash/lash_pull.vpcf"
-- **m_strCastSound**: soundevent:"Lash.Lash.Cast"
-- **m_strVictimCastSound**: soundevent:"Lash.Lash.Impact"
+- **m_strCastSound**: soundevent:"Lash.Grapple.Cast"
+- **m_strVictimCastSound**: soundevent:"Lash.Grapple.Target"
 - **m_BuffModifier**:
   - **subclass**:
     - **_class**: modifier_base
@@ -3242,95 +3418,111 @@
     - **m_mapBonusCurrencies**:
       - **EAbilityUnlocks**: 1
   - **8**:
+    - **m_unRequiredGold**: 3500
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **9**:
     - **m_unRequiredGold**: 4500
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **9**:
+  - **10**:
+    - **m_unRequiredGold**: 5200
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **11**:
     - **m_unRequiredGold**: 6000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **10**:
+  - **12**:
     - **m_unRequiredGold**: 7500
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **11**:
+  - **13**:
+    - **m_unRequiredGold**: 8000
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **14**:
     - **m_unRequiredGold**: 9000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **12**:
+  - **15**:
+    - **m_unRequiredGold**: 9700
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **16**:
     - **m_unRequiredGold**: 10500
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **13**:
+  - **17**:
     - **m_unRequiredGold**: 12000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **14**:
+  - **18**:
     - **m_unRequiredGold**: 13000
     - **m_bUseStandardUpgrade**: True
-  - **15**:
+  - **19**:
     - **m_unRequiredGold**: 14000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **16**:
+  - **20**:
     - **m_unRequiredGold**: 15000
     - **m_bUseStandardUpgrade**: True
-  - **17**:
+  - **21**:
     - **m_unRequiredGold**: 16000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **18**:
+  - **22**:
     - **m_unRequiredGold**: 18000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **19**:
+  - **23**:
     - **m_unRequiredGold**: 20000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **20**:
+  - **24**:
     - **m_unRequiredGold**: 22000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **21**:
+  - **25**:
     - **m_unRequiredGold**: 24000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **22**:
+  - **26**:
     - **m_unRequiredGold**: 27000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **23**:
+  - **27**:
     - **m_unRequiredGold**: 30000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **24**:
+  - **28**:
     - **m_unRequiredGold**: 33000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **25**:
+  - **29**:
     - **m_unRequiredGold**: 36000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **26**:
+  - **30**:
     - **m_unRequiredGold**: 39000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **27**:
+  - **31**:
     - **m_unRequiredGold**: 42000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **28**:
+  - **32**:
     - **m_unRequiredGold**: 45000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **29**:
+  - **33**:
     - **m_unRequiredGold**: 48000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
@@ -3456,6 +3648,8 @@
       - ETechArmorDamageReduction
       - EBulletShieldHealth
       - ETechShieldHealth
+      - EHealingOutput
+      - EDebuffResist
       - ECritDamageReceivedScale
     - **m_vecOtherDisplayStats**:
       - EMaxMoveSpeed
@@ -3476,7 +3670,6 @@
 - **m_strMinimapImage**: panorama:"file://{images}/heroes/lash_mm.psd"
 - **m_strUIAnimGraph**: resource_name:"models/heroes_staging/lash_v2/ui_lash.vanmgrph"
 - **m_strDeathSound**: soundevent:"Lash.Death"
-- **m_hVOEventScript**: resource_name:"soundevents/vo/vo_hero_lash.vsndevts"
 - **m_strRosterSelectedSound**: soundevent:"Lash.VO.HeroPick"
 - **m_strIconHeroCard**: panorama:"file://{images}/heroes/lash_card.psd"
 - **m_strRosterRemovedSound**: soundevent:"Lash.VO.HeroRemove"

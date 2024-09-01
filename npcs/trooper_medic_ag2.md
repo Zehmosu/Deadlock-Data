@@ -1,37 +1,36 @@
-# NPC: alt_super_trooper_melee
+# NPC: trooper_medic_ag2
 
 ## General Stats
 
-- **m_nMaxHealth**: 400
+- **m_nMaxHealth**: 260
 - **m_flSightRangePlayers**: 700.0
 - **m_flSightRangeNPCs**: 1600.0
-- **m_flTrooperDamageResistPct**: 55.0
+- **m_flTrooperDamageResistPct**: 25.0
 - **m_flT1BossDamageResistPct**: 35.0
 - **m_flT2BossDamageResistPct**: 20.0
 - **m_flShieldDamageResistPct**: 80.0
 - **m_flNearDeathDuration**: 1.0
-- **m_flWalkSpeed**: 320
+- **m_flWalkSpeed**: 240
 - **m_flRunSpeed**: 433
 - **m_flAcceleration**: 200
-- **m_flMeleeDamage**: 80.0
-- **m_flMeleeAttemptRange**: 120
-- **m_flMeleeHitRange**: 120
-- **m_flMeleeDuration**: 1.5
+- **m_flMeleeDamage**: 25.0
+- **m_flMeleeAttemptRange**: 100
+- **m_flMeleeHitRange**: 100
+- **m_flMeleeDuration**: 1.0
 - **m_flAttackT1BossMaxRange**: 540
 - **m_flAttackTrooperMaxRange**: 700
-- **m_flMeleeChargeRange**: 1000.0
+- **m_flMeleeChargeRange**: 0
 - **m_flHealthBarOffset**: 76.0
 - **m_flHealthBarOffsetDucking**: 40
 - **m_bPlayLastHitSound**: True
 - **m_flBarrackGuardianDamageResistPct**: 67.5
-- **m_flT1BossDPS**: 83.6
-- **m_flT2BossDPS**: 209.0
-- **m_flT3BossDPS**: 209.0
-- **m_flGeneratorBossDPS**: 41.8
-- **m_flBarrackBossDPS**: 209.0
-- **m_flPlayerDPS**: 42.0
-- **m_flTrooperDPS**: 66.5
-- **m_flModelScale**: 1.1
+- **m_flT1BossDPS**: 36.0
+- **m_flT2BossDPS**: 80.0
+- **m_flT3BossDPS**: 80.0
+- **m_flGeneratorBossDPS**: 22
+- **m_flBarrackBossDPS**: 80.0
+- **m_flPlayerDPS**: 28.0
+- **m_flTrooperDPS**: 35.0
 
 ## Weapon Info
 
@@ -135,17 +134,17 @@
 - **m_NpcAimingSpread**:
   - 0.2
   - 0.8
-- **m_flBulletDamage**: 61.8
+- **m_flBulletDamage**: 36
 
 ## Other Information
 
-- **_base**: super_trooper_melee
-- **_class**: npc_super_trooper
-- **m_sModelName**: resource_name:"models/npc/trooper/super_trooper_melee.vmdl"
+- **_base**: trooper_medic
+- **_class**: npc_trooper
+- **m_sModelName**: resource_name:"models/npc/medic/medic_model.vmdl"
 - **m_hFootstepSounds**: trooper
 - **m_BossAttackParticle**: resource_name:"particles/weapon_fx/trooper/trooper_bullet_bonus_dmg.vpcf"
-- **m_sDefaultMaterialGroupName**: Friendly
-- **m_sEnemyMaterialGroupName**: Enemy
+- **m_sDefaultMaterialGroupName**: FriendlyMedic
+- **m_sEnemyMaterialGroupName**: EnemyMedic
 - **m_DeathParticle**: resource_name:"particles/trooper/trooper_death_sn.vpcf"
 - **m_DeathSound**: soundevent:"Trooper.Death"
 - **m_MeleeHitSound**: soundevent:"Trooper.Melee.Damage.Hit"
@@ -172,8 +171,8 @@
   - 0
   - 125
   - 125
-- **m_MeleeSwingParticle**: resource_name:"particles/npc/npc_melee_swing.vpcf"
-- **m_MeleeActivateParticle**: resource_name:"particles/npc/npc_melee_activate.vpcf"
+- **m_MeleeSwingParticle**: resource_name:"particles/abilities/melee_swing.vpcf"
+- **m_MeleeActivateParticle**: resource_name:"particles/abilities/melee/melee_activate.vpcf"
 - **m_MeleeAnimName**: b_melee
 - **m_LastHitParticle**: resource_name:"particles/generic/last_hit.vpcf"
 - **m_strLastHitSound**: soundevent:"LastHit.Default"
@@ -190,4 +189,10 @@
 - **m_sCelebrationSound**: soundevent:"Trooper.Objective.Win.Cheer"
 - **m_sTeam1MaterialGroupName**: Amber
 - **m_sTeam2MaterialGroupName**: Sapphire
-- **m_TrooperType**: TROOPER_MELEE
+- **m_TrooperType**: TROOPER_MEDIC
+- **m_mapBoundAbilities**:
+  - **ESlot_Signature_2**: ability_medic_trooper_heal
+- **m_MedicHealActiveParticle**: resource_name:"particles/trooper/trooper_medic_chargeup.vpcf"
+- **m_sAG2VariationName**: resource_name:"models/animgraph2/trooper_humanoid/trooper_humanoid_trooper_medic.vnmvar"
+- **m_MeleeAttackPoints**:
+  - 0.3

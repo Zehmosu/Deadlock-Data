@@ -16,7 +16,7 @@
 - **m_flMeleeDamage**: 25.0
 - **m_flMeleeAttemptRange**: 100
 - **m_flMeleeHitRange**: 100
-- **m_flMeleeDuration**: 1.0
+- **m_flMeleeDuration**: 1.5
 - **m_flAttackT1BossMaxRange**: 540
 - **m_flAttackTrooperMaxRange**: 700
 - **m_flMeleeChargeRange**: 0

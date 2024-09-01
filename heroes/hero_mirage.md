@@ -149,7 +149,7 @@
   - **m_flZoomMoveSpeedPercent**: 1.0
   - **m_flShootMoveSpeedPercent**: 0.7
   - **m_flHorizontalPunch**: 0
-  - **m_flVerticalPunch**: 0.4
+  - **m_flVerticalPunch**: 0.2
   - **m_flRecoilRecoverySpeed**: 5.0
   - **m_VerticallRecoil**:
     - **m_Range**:
@@ -173,8 +173,8 @@
   - **m_flDamageFalloffEndScale**: 0.1
   - **m_flDamageFalloffBias**: 0.5
   - **m_iBullets**: 1
-  - **m_flCycleTime**: 0.45
-  - **m_reloadDuration**: 2.75
+  - **m_flCycleTime**: 0.4
+  - **m_reloadDuration**: 2.5
   - **m_iClipSize**: 12
   - **m_iBurstShotCount**: 1
   - **m_flBurstShotCooldown**: 0
@@ -254,7 +254,7 @@
     - 0.0
     - 0.5
   - **m_strBulletImpactSound**: soundevent:"Mirage.Wpn.Impact"
-  - **m_flBulletDamage**: 25.8
+  - **m_flBulletDamage**: 23
 - **_multibase**:
   - hero_weapon_base
 - **m_bStartTrained**: True
@@ -949,6 +949,27 @@
 - **m_flLateJumpGraceWindow**: 0.15
 - **m_flDashJumpVerticalSpeed**: 400.0
 - **m_flDashJumpDistanceInMeters**: 18.0
+- **m_flWallJumpSpeed**: 600.0
+- **m_WallJumpParticle**: resource_name:"particles/generic/wall_jump.vpcf"
+- **m_WallJumpExecutedSound**: soundevent:"Player.WallJump"
+- **m_WallJumpAirDragCurve**:
+  - **m_spline**:
+    | x | y | m_flSlopeIncoming | m_flSlopeOutgoing |
+    | --- | --- | --- | --- |
+    | 0.0 | 2.203636 | -4.451692 | -4.451692 |
+    | 0.495011 | 0.0 | -4.451692 | -4.451692 |
+  - **m_tangents**:
+    | m_nIncomingTangent | m_nOutgoingTangent |
+    | --- | --- |
+    | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+    | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+  - **m_vDomainMins**:
+    - 0.0
+    - 0.0
+  - **m_vDomainMaxs**:
+    - 1.0
+    - 5.0
+- **m_flWallJumpNormalSpeed**: 400.0
 
 ### ESlot_Ability_Slide
 
@@ -1617,6 +1638,159 @@
   - **m_vecHUDElements**:
 - **m_flTimeForHint**: 1.0
 
+### ESlot_Ability_ClimbRope
+
+- **_class**: citadel_ability_climb_rope
+- **m_mapAbilityProperties**:
+  - **AbilityCooldown**:
+    - **m_strValue**: 0.1
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cooldown
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCooldown_scale_function
+        - **m_eSpecificStatScaleType**: ETechCooldown
+  - **AbilityDuration**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: duration
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityDuration_scale_function
+        - **m_eSpecificStatScaleType**: ETechDuration
+  - **AbilityCastRange**:
+    - **m_strValue**: 0
+    - **m_eDisplayUnits**: EDisplayUnit_Meters
+    - **m_strCSSClass**: range
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCastRange_scale_function
+        - **m_eSpecificStatScaleType**: ETechRange
+  - **AbilityUnitTargetLimit**:
+    - **m_strValue**: 1
+    - **m_bCanSetTokenOverride**: True
+  - **AbilityCastDelay**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cast
+    - **m_bCanSetTokenOverride**: True
+  - **AbilityChannelTime**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cast
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_multi_stats
+        - **_my_subclass_name**: scale_duration
+        - **m_vecScalingStats**:
+          - EChannelDuration
+          - ETechDuration
+  - **AbilityPostCastDuration**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+  - **AbilityCharges**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: cast
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCharges_scale_function
+        - **m_eSpecificStatScaleType**: EMaxChargesIncrease
+  - **AbilityCooldownBetweenCharge**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_strCSSClass**: charge_cooldown
+    - **m_bCanSetTokenOverride**: True
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: AbilityCooldownBetweenCharge_scale_function
+        - **m_eSpecificStatScaleType**: ETechCooldownBetweenChargeUses
+  - **ChannelMoveSpeed**:
+    - **m_strValue**: 50
+    - **m_eDisplayUnits**: EDisplayUnit_MetersPerSecond
+    - **m_strCSSClass**: move_speed
+    - **m_bCanSetTokenOverride**: True
+  - **AbilityResourceCost**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_bCanSetTokenOverride**: True
+    - **m_strCSSClass**: cast
+  - **TechPower**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_bCanSetTokenOverride**: True
+    - **m_eProvidedPropertyType**: MODIFIER_VALUE_TECH_POWER
+  - **WeaponPower**:
+    - **m_strValue**: 0
+    - **m_strDisableValue**: 0
+    - **m_bCanSetTokenOverride**: True
+    - **m_eProvidedPropertyType**: MODIFIER_VALUE_WEAPON_POWER
+- **m_bitsPostCastEnabledStateMask**: MODIFIER_STATE_BUSY_WITH_ACTION
+- **_editor**:
+  - **folder_name**: Base
+- **m_WeaponInfo**:
+  - **m_BulletSpeedCurve**:
+    - **m_spline**:
+      | x | y | m_flSlopeIncoming | m_flSlopeOutgoing |
+      | --- | --- | --- | --- |
+      | 0.0 | 10000.0 | 0.0 | 0.0 |
+      | 100.0 | 10000.0 | 0.0 | 0.0 |
+    - **m_tangents**:
+      | m_nIncomingTangent | m_nOutgoingTangent |
+      | --- | --- |
+      | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+      | CURVE_TANGENT_SPLINE | CURVE_TANGENT_SPLINE |
+    - **m_vDomainMins**:
+      - 0.0
+      - 0.0
+    - **m_vDomainMaxs**:
+      - 100.0
+      - 10000.0
+- **_multibase**:
+  - inherent_base
+- **m_eAbilityType**: EAbilityType_Innate
+- **m_bStartTrained**: True
+- **m_iMaxLevel**: 1
+- **m_eAbilityTargetingLocation**: CITADEL_ABILITY_TARGETING_LOCATION_SELF
+- **m_eAbilityActivation**: CITADEL_ABILITY_ACTIVATION_ON_BUTTON_IS_DOWN
+- **m_nAbilityBehaviors**: CITADEL_ABILITY_BEHAVIOR_HIDDEN | CITADEL_ABILITY_BEHAVIOR_DONT_BREAK_INVISIBILITY | CITADEL_ABILITY_BEHAVIOR_SILENT_CAST_FAILURE_FEEDBACK | CITADEL_ABILITY_BEHAVIOR_DONT_INTERRUPT_SPRINT | CITADEL_ABILITY_BEHAVIOR_NOT_SILENCABLE | CITADEL_ABILITY_BEHAVIOR_NO_TARGET | CITADEL_ABILITY_BEHAVIOR_NON_COMBAT | CITADEL_ABILITY_BEHAVIOR_CASTABLE_WHILE_HIDDEN
+- **m_bitsInterruptingStates**: MODIFIER_STATE_IMMOBILIZED | MODIFIER_STATE_STUNNED | MODIFIER_STATE_IS_ASLEEP
+- **m_flActivateRange**: 90.0
+- **m_flMinButtonHoldTimeToActivate**: 0.15
+- **m_flClimbSpeedUp**: 11.0
+- **m_flClimbSpeedDown**: 12.0
+- **m_flClimbSpeedDownMax**: 30.0
+- **m_flClimbDownAccelTime**: 1.0
+- **m_flLatchSpeed**: 400
+- **m_flAttachOffset**: 70.0
+- **m_flMinReconnectTime**: 0.5
+- **m_flSideMoveReduction**: -100.0
+- **m_flTopOffset**: 40.0
+- **m_flBottomOffset**: 60.0
+- **m_flTraceRadiusSize**: 96.0
+- **m_flStopTimeToShoot**: 0.2
+- **m_flJumpOffVertical**: 250.0
+- **m_flJumpOffHorizontal**: 400.0
+- **m_flDuckOffVertical**: 100.0
+- **m_flDuckOffHorizontal**: 400.0
+- **m_flJumpToRoofRayCheckDist**: 160.0
+- **m_flMinTimeToRoofCheck**: 0.7
+- **m_HUDPanel**:
+  - **m_vecButtonHints**:
+    | m_strLocToken | m_eHintSide | m_strBindingOverride1 | m_strContext |
+    | --- | --- | --- | --- |
+    | #AbilityButtonHint_ClimbRope | EButtonSide_Bottom | in_mantle | climb_rope |
+
 ### ESlot_Ability_Innate_1
 
 - **_class**: citadel_ability_dash
@@ -1816,6 +1990,7 @@
     | k_ECameraOp_Lag | 0.0 | 0.1 | 5.0 | 50.0 |
 - **m_strStaminaDrainedSound**: soundevent:"Damage.Stamina.Drain"
 - **m_DownDashParticle**: resource_name:"particles/generic/down_dash.vpcf"
+- **m_bPlayMeepMop**: False
 
 ### ESlot_Ability_Innate_2
 
@@ -1953,7 +2128,7 @@
 - **_class**: citadel_ability_melee_parry
 - **m_mapAbilityProperties**:
   - **AbilityCooldown**:
-    - **m_strValue**: 6
+    - **m_strValue**: 5
     - **m_strDisableValue**: 0
     - **m_strCSSClass**: cooldown
     - **m_bCanSetTokenOverride**: True
@@ -2269,6 +2444,11 @@
     - **m_strValue**: 0.6
     - **m_eScaleType**: ETechDuration
     - **m_strCSSClass**: duration
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: EnemyLiftDuration_scale_function
+        - **m_eSpecificStatScaleType**: ETechDuration
   - **SplitAngle**:
     - **m_strValue**: 0
   - **ForwardOffset**:
@@ -2345,7 +2525,7 @@
 - **m_eAbilityTargetingLocation**: CITADEL_ABILITY_TARGETING_LOCATION_NONE
 - **m_eAbilityTargetingShape**: CITADEL_ABILITY_TARGETING_SHAPE_SPHERE
 - **m_eAbilityActivation**: CITADEL_ABILITY_ACTIVATION_INSTANT_CAST
-- **m_nAbilityBehaviors**: CITADEL_ABILITY_BEHAVIOR_DONT_INTERRUPT_SPRINT | CITADEL_ABILITY_BEHAVIOR_PROJECTILE | CITADEL_ABILITY_BEHAVIOR_NO_TARGET | CITADEL_ABILITY_BEHAVIOR_DONT_TRIGGER_SPELL_BLOCK | CITADEL_ABILITY_BEHAVIOR_DISPLAYS_DAMAGE_IMPACT
+- **m_nAbilityBehaviors**: CITADEL_ABILITY_BEHAVIOR_DONT_INTERRUPT_SPRINT | CITADEL_ABILITY_BEHAVIOR_CASTABLE_WHILE_BUSY | CITADEL_ABILITY_BEHAVIOR_PROJECTILE | CITADEL_ABILITY_BEHAVIOR_NO_TARGET | CITADEL_ABILITY_BEHAVIOR_DONT_TRIGGER_SPELL_BLOCK | CITADEL_ABILITY_BEHAVIOR_DISPLAYS_DAMAGE_IMPACT
 - **m_nAbilityTargetTypes**: CITADEL_UNIT_TARGET_ALL_ENEMY
 - **m_projectileInfo**:
   - **m_flUpSpeed**: 0
@@ -2509,7 +2689,7 @@
   - **LaunchWindowCooldown**:
     - **m_strValue**: 35
   - **LaunchWindowDuration**:
-    - **m_strValue**: 20
+    - **m_strValue**: 15
     - **m_strCSSClass**: duration
     - **m_subclassScaleFunction**:
       - **subclass**:
@@ -2527,7 +2707,7 @@
         - **_my_subclass_name**: Radius_scale_function
         - **m_eSpecificStatScaleType**: ETechRadius
   - **DPS**:
-    - **m_strValue**: 30
+    - **m_strValue**: 20
     - **m_strCSSClass**: tech_damage
     - **m_subclassScaleFunction**:
       - **subclass**:
@@ -2536,11 +2716,6 @@
         - **m_flStatScale**: 0.3
   - **DamageInterval**:
     - **m_strValue**: 0.5
-  - **SlowPercent**:
-    - **m_strValue**: 20
-    - **m_strCSSClass**: slow
-    - **m_eProvidedPropertyType**: MODIFIER_VALUE_MOVEMENT_SPEED_SLOW_PERCENT
-    - **m_UsageFlags**: APUsageFlag_ModifierConditional
   - **DebuffDuration**:
     - **m_strValue**: 4
     - **m_strCSSClass**: duration
@@ -2549,6 +2724,22 @@
         - **_class**: scale_function_single_stat
         - **_my_subclass_name**: SlowDuration_scale_function
         - **m_eSpecificStatScaleType**: ETechDuration
+  - **HealingFactor**:
+    - **m_strValue**: 40
+    - **m_strCSSClass**: healing
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: HealingFactor_scale_function
+        - **m_eSpecificStatScaleType**: EHealingOutput
+  - **NonHeroHealingFactor**:
+    - **m_strValue**: 15
+    - **m_strCSSClass**: healing
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: NonHeroHealingFactor_scale_function
+        - **m_eSpecificStatScaleType**: EHealingOutput
 - **m_bitsPostCastEnabledStateMask**: MODIFIER_STATE_BUSY_WITH_ACTION
 - **_editor**:
   - **folder_name**: Hero Mirage
@@ -2569,10 +2760,10 @@
       - 0.0
     - **m_vDomainMaxs**:
       - 100.0
-      - 1200.0
+      - 2000.0
   - **m_szBulletTravelTracerParticle**: resource_name:"particles/abilities/mirage/mirage_flying_beetle_projectile.vpcf"
   - **m_flBulletGravityScale**: 0.4
-  - **m_flBulletRadius**: 1.5
+  - **m_flBulletRadius**: 26
   - **m_flBulletRadiusVsWorld**: 1.5
   - **m_mapImpactEffects**:
     - **default**:
@@ -2606,11 +2797,11 @@
 - **m_strAbilityChargeReadySound**: soundevent:""
 - **m_skillshotMissParticle**: resource_name:"particles/abilities/skillshot_default_miss_owner.vpcf"
 - **m_iUpdateTime**: 1664215031
-- **m_nAbilityBehaviors**: CITADEL_ABILITY_BEHAVIOR_PROJECTILE | CITADEL_ABILITY_BEHAVIOR_DISPLAYS_DAMAGE_IMPACT | CITADEL_ABILITY_BEHAVIOR_PROJECTILE_FIRED_AS_BULLET
+- **m_nAbilityBehaviors**: CITADEL_ABILITY_BEHAVIOR_PROJECTILE | CITADEL_ABILITY_BEHAVIOR_CASTABLE_WHILE_BUSY | CITADEL_ABILITY_BEHAVIOR_DISPLAYS_DAMAGE_IMPACT | CITADEL_ABILITY_BEHAVIOR_PROJECTILE_FIRED_AS_BULLET
 - **m_nAbilityTargetTypes**: CITADEL_UNIT_TARGET_ALL_ENEMY
 - **m_eAbilityTargetingShape**: CITADEL_ABILITY_TARGETING_SHAPE_CIRCLE
 - **m_eAbilityTargetingLocation**: CITADEL_ABILITY_TARGETING_LOCATION_NONE
-- **m_eAbilityActivation**: CITADEL_ABILITY_ACTIVATION_PRESS
+- **m_eAbilityActivation**: CITADEL_ABILITY_ACTIVATION_INSTANT_CAST
 - **m_bShowTargetingPreviewWhileCasting**: True
 - **m_strAbilityImage**: panorama:"file://{images}/hud/abilities/mirage/mirage_fire_beetles.psd"
 - **m_strMoviePreviewPath**: 
@@ -2621,36 +2812,35 @@
 - **m_ExplodeParticle**: resource_name:"particles/abilities/mirage/mirage_fire_beetles_explode_v2.vpcf"
 - **m_CasterModifier**:
   - **subclass**:
-    - **_class**: modifier_base
+    - **_class**: modifier_mirage_fire_beetles_buff
     - **_my_subclass_name**: modifier_mirage_fire_beetles_launch_window
     - **m_sLocalizationName**: modifier_mirage_fire_beetles_launch_window
     - **m_eHudDisplayLocation**: DISPLAY_HUD_CENTER
     - **m_bIsHidden**: False
+    - **m_CasterBuffParticle**: resource_name:"particles/abilities/mirage/mirage_fire_beetles_buff.vpcf"
 - **m_DebuffModifier**:
   - **subclass**:
     - **_class**: modifier_mirage_fire_beetles_debuff
     - **_my_subclass_name**: modifier_mirage_fire_beetles_debuff
     - **m_sLocalizationName**: modifier_mirage_fire_beetles_debuff
     - **m_bIsHidden**: True
-    - **m_strSmallIconCssClass**: slowed
-    - **m_DebuffParticle**: resource_name:"particles/abilities/pocket/pocket_affliction_dot.vpcf"
+    - **m_strSmallIconCssClass**: afterburn_dot
+    - **m_DebuffParticle**: resource_name:"particles/abilities/mirage/mirage_fire_beetles_debuff.vpcf"
     - **m_strParticleEffect**: resource_name:""
     - **m_eDrawOverheadStatus**: OVERHEAD_DRAW_FOR_CASTER_ONLY
     - **m_sAmbientLoopingSound**: soundevent:"Synth.Affliction.Debuff_Lp"
-    - **m_strScreenParticleEffect**: resource_name:"particles/abilities/pocket/pocket_affliction_dot_screen_effect.vpcf"
-    - **m_vecAutoRegisterModifierValueFromAbilityPropertyName**:
-      - SlowPercent
+    - **m_strScreenParticleEffect**: resource_name:""
 - **m_vecAbilityUpgrades**:
   | m_vecPropertyUpgrades |
   | --- |
-  | [{'m_strPropertyName': 'SlowPercent', 'm_strBonus': '20'}] |
   | [{'m_strPropertyName': 'AbilityCharges', 'm_strBonus': '2'}] |
+  | [{'m_strPropertyName': 'HealingFactor', 'm_strBonus': '40'}, {'m_strPropertyName': 'NonHeroHealingFactor', 'm_strBonus': '15'}] |
   | [{'m_strPropertyName': 'DPS', 'm_strBonus': '40'}] |
 - **m_AbilityTooltipDetails**:
   - **m_vecAbilityInfoSections**:
     | m_strLocString | m_vecAbilityPropertiesBlock | m_vecBasicProperties |
     | --- | --- | --- |
-    | #mirage_fire_beetles_desc | [{'m_vecAbilityProperties': [{'m_strImportantProperty': 'DPS'}, {'m_strImportantProperty': 'SlowPercent'}, {'m_strImportantProperty': 'DebuffDuration'}]}] | ['LaunchWindowDuration', 'LaunchWindowCooldown'] |
+    | #mirage_fire_beetles_desc | [{'m_vecAbilityProperties': [{'m_strImportantProperty': 'DPS'}, {'m_strImportantProperty': 'HealingFactor'}, {'m_strImportantProperty': 'DebuffDuration'}]}] | ['LaunchWindowDuration', 'LaunchWindowCooldown', 'NonHeroHealingFactor'] |
 
 ### ESlot_Signature_3
 
@@ -2900,7 +3090,7 @@
 - **_class**: mirage_djinns_reach
 - **m_mapAbilityProperties**:
   - **AbilityCooldown**:
-    - **m_strValue**: 40
+    - **m_strValue**: 60
     - **m_strDisableValue**: 0
     - **m_strCSSClass**: cooldown
     - **m_bCanSetTokenOverride**: True
@@ -2933,7 +3123,7 @@
     - **m_strValue**: 1
     - **m_bCanSetTokenOverride**: True
   - **AbilityCastDelay**:
-    - **m_strValue**: 0.75
+    - **m_strValue**: 1.1
     - **m_strDisableValue**: 0
     - **m_strCSSClass**: cast
     - **m_bCanSetTokenOverride**: True
@@ -2994,6 +3184,8 @@
     - **m_strDisableValue**: 0
     - **m_bCanSetTokenOverride**: True
     - **m_eProvidedPropertyType**: MODIFIER_VALUE_WEAPON_POWER
+  - **MaxTargets**:
+    - **m_strValue**: 3
   - **TechCleaveExpireTime**:
     - **m_strValue**: 0.2
   - **FallSpeedMax**:
@@ -3011,34 +3203,41 @@
         - **_my_subclass_name**: Damage_scale_function
         - **m_eSpecificStatScaleType**: ETechPower
         - **m_flStatScale**: 1.6
-  - **CameraHeightOffset**:
-    - **m_strValue**: 20
-  - **CameraHorizontalOffset**:
-    - **m_strValue**: 15
   - **BossDamagePercent**:
     - **m_strValue**: 50
   - **DebuffDuration**:
-    - **m_strValue**: 4.5
+    - **m_strValue**: 7
     - **m_eScaleType**: ETechDuration
     - **m_strCSSClass**: duration
-  - **ConeRadius**:
-    - **m_strValue**: 25m
+    - **m_subclassScaleFunction**:
+      - **subclass**:
+        - **_class**: scale_function_single_stat
+        - **_my_subclass_name**: DebuffDuration_scale_function
+        - **m_eSpecificStatScaleType**: ETechDuration
+  - **Radius**:
+    - **m_strValue**: 17m
     - **m_strCSSClass**: distance
     - **m_subclassScaleFunction**:
       - **subclass**:
         - **_class**: scale_function_single_stat
         - **_my_subclass_name**: Radius_scale_function
         - **m_eSpecificStatScaleType**: ETechRadius
-    - **m_strLocTokenOverride**: DjinnsReachConeRadius
-  - **ConeAngle**:
-    - **m_strValue**: 70
   - **ChainSlowPercent**:
-    - **m_strValue**: 30
+    - **m_strValue**: 20
     - **m_strCSSClass**: slow
   - **ChainLength**:
-    - **m_strValue**: 22m
+    - **m_strValue**: 14m
     - **m_eDisplayType**: ETechRadius
     - **m_strCSSClass**: distance
+  - **DamageSharePercent**:
+    - **m_strValue**: 30
+  - **BulletResistReduction**:
+    - **m_strValue**: -25
+    - **m_strCSSClass**: bullet_armor_down
+    - **m_eProvidedPropertyType**: MODIFIER_VALUE_BULLET_ARMOR_DAMAGE_RESIST_REDUCTION
+    - **m_UsageFlags**: APUsageFlag_ModifierConditional
+  - **InitialPullAmount**:
+    - **m_strValue**: 100
 - **m_bitsPostCastEnabledStateMask**: MODIFIER_STATE_BUSY_WITH_ACTION
 - **_editor**:
   - **folder_name**: Hero Orion
@@ -3213,10 +3412,10 @@
 - **m_strAbilityChargeReadySound**: soundevent:""
 - **m_skillshotMissParticle**: resource_name:"particles/abilities/skillshot_default_miss_owner.vpcf"
 - **m_iUpdateTime**: 1668635902
-- **m_strMoviePreviewPath**: file://{resources}/videos/hero_abilities/ability_orion_charged_shot.webm
 - **m_ChannelParticle**: resource_name:"particles/abilities/archer/archer_charged_shot_channel.vpcf"
 - **m_ChannelStartParticle**: resource_name:"particles/abilities/archer/archer_charged_shot_channel_start.vpcf"
 - **m_ShootParticle**: resource_name:"particles/abilities/archer/archer_charged_shot_channel_shock.vpcf"
+- **m_SphereParticle**: resource_name:"particles/abilities/mirage/mirage_djinns_reach_aoe.vpcf"
 - **m_strCastSound**: soundevent:"Orion.Charged.Shot.Cast"
 - **m_strCastDelaySound**: soundevent:"Orion.Charged.Shot.CastDelay"
 - **m_strDamageTakenSound**: soundevent:"Orion.Charged.Shot.Target.Damage.Taken"
@@ -3225,51 +3424,46 @@
 - **m_eAbilityActivation**: CITADEL_ABILITY_ACTIVATION_INSTANT_CAST
 - **m_nAbilityBehaviors**: CITADEL_ABILITY_BEHAVIOR_NO_TARGET | CITADEL_ABILITY_BEHAVIOR_CHANNELLED | CITADEL_ABILITY_BEHAVIOR_PROJECTILE | CITADEL_ABILITY_BEHAVIOR_DONT_TRIGGER_SPELL_BLOCK | CITADEL_ABILITY_BEHAVIOR_DISPLAYS_DAMAGE_IMPACT
 - **m_strCastAnimGraphParam**: e_ChargedShot
-- **m_nAbilityTargetTypes**: CITADEL_UNIT_TARGET_ALL_ENEMY
-- **m_strAbilityImage**: panorama:"file://{images}/hud/abilities/archer/archer_charged_shot.psd"
+- **m_nAbilityTargetTypes**: CITADEL_UNIT_TARGET_HERO_ENEMY
+- **m_strAbilityImage**: panorama:"file://{images}/hud/abilities/mirage/mirage_djinns_reach.psd"
+- **m_strMoviePreviewPath**: 
 - **m_vecAbilityUpgrades**:
   | m_vecPropertyUpgrades |
   | --- |
-  | [{'m_strPropertyName': 'AbilityCooldown', 'm_strBonus': '-1'}] |
-  | [{'m_strPropertyName': 'AbilityCooldown', 'm_strBonus': '-1'}] |
-  | [{'m_strPropertyName': 'AbilityCooldown', 'm_strBonus': '-1'}] |
+  | [{'m_strPropertyName': 'AbilityCooldown', 'm_strBonus': '-20'}] |
+  | [{'m_strPropertyName': 'DamageSharePercent', 'm_strBonus': '20'}] |
+  | [{'m_strPropertyName': 'BulletResistReduction', 'm_strBonus': '-15'}] |
 - **m_AutoChannelModifier**:
   - **subclass**:
     - **_my_subclass_name**: modifier_intrinsic_base
     - **_class**: modifier_intrinsic_base
-- **m_RootModifier**:
+- **m_DebuffModifier**:
   - **subclass**:
-    - **_class**: modifier_citadel_root
-    - **_my_subclass_name**: modifier_citadel_root
-    - **m_strParticleEffect**: resource_name:"particles/abilities/warden/warden_lockdown_root.vpcf"
-    - **m_sLocalizationName**: modifier_warden_lockdown_root
-- **m_ChainModifier**:
-  - **subclass**:
-    - **_my_subclass_name**: modifier_mirage_djinns_reach_chain
-    - **_class**: modifier_mirage_djinns_reach_chain
-    - **m_strParticleStatusEffect**: resource_name:""
-    - **m_sStartSound**: soundevent:"Mirage.DjinnsReach.Chain.Target"
-    - **m_sExpiredSound**: soundevent:"Mirage.DjinnsReach.Chain.Modifier.End"
-    - **m_sAmbientLoopingSound**: soundevent:"Mirage.DjinnsReach.Chain.Modifier.Dur.Lp"
-    - **m_strSmallIconCssClass**: chained
-    - **m_strScreenParticleEffect**: resource_name:"particles/abilities/hornet/hornet_tether_screen_effect.vpcf"
-    - **m_strParticleEffect**: resource_name:"particles/abilities/hornet/hornet_chain.vpcf"
-- **m_cameraSequenceCastStart**:
-  - **m_vecFOVOperations**:
-    | m_bSpringToDefault | m_flSpringTarget | m_eCameraOperation |
-    | --- | --- | --- |
-    | False | 50.0 | k_ECameraOp_Spring |
-    |  |  | k_ECameraOp_Maintain |
-- **m_cameraSequenceChannelStart**:
-  - **m_vecFOVOperations**:
-    | m_flMaintainDuration | m_eCameraOperation |
-    | --- | --- |
-    | 999.0 | k_ECameraOp_Maintain |
+    - **_class**: modifier_mirage_djinns_reach_debuff
+    - **_my_subclass_name**: modifier_mirage_djinns_reach_debuff
+    - **m_sLocalizationName**: modifier_mirage_djinns_reach_debuff
+    - **m_bIsHidden**: True
+    - **m_strParticleEffect**: resource_name:"particles/modifiers/armor_suppressor.vpcf"
+    - **m_vecAutoRegisterModifierValueFromAbilityPropertyName**:
+      - BulletResistReduction
+    - **m_ChainModifier**:
+      - **subclass**:
+        - **_class**: modifier_mirage_djinns_reach_chain
+        - **_my_subclass_name**: modifier_mirage_djinns_reach_chain
+        - **m_bIsHidden**: True
+        - **m_nAttributes**: MODIFIER_ATTRIBUTE_MULTIPLE
+        - **m_strParticleStatusEffect**: resource_name:""
+        - **m_sStartSound**: soundevent:"Mirage.DjinnsReach.Chain.Target"
+        - **m_sExpiredSound**: soundevent:"Mirage.DjinnsReach.Chain.Modifier.End"
+        - **m_sAmbientLoopingSound**: soundevent:"Mirage.DjinnsReach.Chain.Modifier.Dur.Lp"
+        - **m_strSmallIconCssClass**: chained
+        - **m_strScreenParticleEffect**: resource_name:"particles/abilities/mirage/mirage_djinns_reach_debuff_screen.vpcf"
+        - **m_strParticleEffect**: resource_name:"particles/abilities/mirage/mirage_djinns_reach_chain.vpcf"
 - **m_AbilityTooltipDetails**:
   - **m_vecAbilityInfoSections**:
     | m_strLocString | m_vecAbilityPropertiesBlock | m_vecBasicProperties |
     | --- | --- | --- |
-    | #mirage_djinns_reach_desc | [{'m_vecAbilityProperties': [{'m_strImportantProperty': 'DebuffDuration'}, {'m_strImportantProperty': 'ConeRadius'}]}] | ['ChainSlowPercent'] |
+    | #mirage_djinns_reach_desc | [{'m_vecAbilityProperties': [{'m_strImportantProperty': 'BulletResistReduction'}, {'m_strImportantProperty': 'DamageSharePercent'}, {'m_strImportantProperty': 'DebuffDuration'}]}] | ['ChainSlowPercent', 'Radius', 'ChainLength'] |
 
 ## Other Information
 
@@ -3363,95 +3557,111 @@
     - **m_mapBonusCurrencies**:
       - **EAbilityUnlocks**: 1
   - **8**:
+    - **m_unRequiredGold**: 3500
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **9**:
     - **m_unRequiredGold**: 4500
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **9**:
+  - **10**:
+    - **m_unRequiredGold**: 5200
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **11**:
     - **m_unRequiredGold**: 6000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **10**:
+  - **12**:
     - **m_unRequiredGold**: 7500
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **11**:
+  - **13**:
+    - **m_unRequiredGold**: 8000
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **14**:
     - **m_unRequiredGold**: 9000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **12**:
+  - **15**:
+    - **m_unRequiredGold**: 9700
+    - **m_mapBonusCurrencies**:
+      - **EAbilityPoints**: 1
+  - **16**:
     - **m_unRequiredGold**: 10500
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **13**:
+  - **17**:
     - **m_unRequiredGold**: 12000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **14**:
+  - **18**:
     - **m_unRequiredGold**: 13000
     - **m_bUseStandardUpgrade**: True
-  - **15**:
+  - **19**:
     - **m_unRequiredGold**: 14000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
     - **m_bUseStandardUpgrade**: True
-  - **16**:
+  - **20**:
     - **m_unRequiredGold**: 15000
     - **m_bUseStandardUpgrade**: True
-  - **17**:
+  - **21**:
     - **m_unRequiredGold**: 16000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **18**:
+  - **22**:
     - **m_unRequiredGold**: 18000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **19**:
+  - **23**:
     - **m_unRequiredGold**: 20000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **20**:
+  - **24**:
     - **m_unRequiredGold**: 22000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **21**:
+  - **25**:
     - **m_unRequiredGold**: 24000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **22**:
+  - **26**:
     - **m_unRequiredGold**: 27000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **23**:
+  - **27**:
     - **m_unRequiredGold**: 30000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **24**:
+  - **28**:
     - **m_unRequiredGold**: 33000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **25**:
+  - **29**:
     - **m_unRequiredGold**: 36000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **26**:
+  - **30**:
     - **m_unRequiredGold**: 39000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **27**:
+  - **31**:
     - **m_unRequiredGold**: 42000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **28**:
+  - **32**:
     - **m_unRequiredGold**: 45000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
-  - **29**:
+  - **33**:
     - **m_unRequiredGold**: 48000
     - **m_mapBonusCurrencies**:
       - **EAbilityPoints**: 1
@@ -3576,6 +3786,8 @@
       - ETechArmorDamageReduction
       - EBulletShieldHealth
       - ETechShieldHealth
+      - EHealingOutput
+      - EDebuffResist
       - ECritDamageReceivedScale
     - **m_vecOtherDisplayStats**:
       - EMaxMoveSpeed
@@ -3600,7 +3812,6 @@
 - **m_strUIAnimGraph**: resource_name:"models/heroes_staging/mirage/ui_mirage.vanmgrph"
 - **m_strDeathSound**: soundevent:"Player.DeathFemale"
 - **m_hGameSoundEventScript**: resource_name:"soundevents/hero/mirage.vsndevts"
-- **m_hVOEventScript**: resource_name:"soundevents/vo/vo_hero_mirage.vsndevts"
 - **m_hGeneratedVOEventScript**: resource_name:"soundevents/vo/generated_vo_hero_mirage.vsndevts"
 - **m_strRosterSelectedSound**: soundevent:"Mirage.VO.HeroPick"
 - **m_strRosterRemovedSound**: soundevent:"Mirage.VO.HeroRemove"
